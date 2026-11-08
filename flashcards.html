@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#174e43" />
+    <title>Property &amp; Casualty Flashcards</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body { width: 100%; height: 100%; margin: 0; }
+      body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: #f6f7f4; color: #1d2a28; }
+      .loading { position: fixed; inset: 0; display: grid; place-content: center; gap: 12px; text-align: center; padding: 24px; }
+      .loading p { margin: 0; color: #5d6c69; }
+      .loading a { color: #1f6f5c; font-weight: 700; }
+      iframe { display: block; width: 100%; height: 100%; border: 0; }
+    </style>
+  </head>
+  <body>
+    <div class="loading" id="loading" role="status">
+      <strong>Opening flashcards…</strong>
+      <p>If they do not open automatically, <a href="property-casualty-quiz.html">open the quiz app</a> and choose Flashcards.</p>
+    </div>
+    <iframe id="study-app" title="Property and Casualty flashcard study app" src="property-casualty-quiz.html"></iframe>
+    <script>
+      const frame = document.getElementById('study-app');
+      frame.addEventListener('load', () => {
+        try {
+          const doc = frame.contentDocument;
+          const cardsMode = doc.querySelector('#studies [data-s="cards"]');
+          const start = doc.getElementById('start');
+          if (!cardsMode || !start) throw new Error('Flashcard controls were not found.');
+          cardsMode.click();
+          start.click();
+          document.getElementById('loading').hidden = true;
+        } catch (error) {
+          document.getElementById('loading').innerHTML = '<strong>Could not start flashcards automatically.</strong><p><a href="property-casualty-quiz.html">Open the quiz app</a> and choose Flashcards.</p>';
+        }
+      });
+    </script>
+  </body>
+</html>
